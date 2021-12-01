@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--
+        分页插件实际是对xq的执行器执行sql语句之前的拦截，拦截当前的方法追加limit分页的条件，
+        是mybati框架自己的功能，spring框架接管不了
+        其他所有的配置，包括属性文件的读取，包括DataSource的创建，包括实体类文件的注册，包括mappers文件的注册，全部被
+        拿到spring配置文件中
+    -->
+    <!--分页插件的配置
+
+        PageInfo
+
+        pageNum：当前是第几页
+        pageSize：每页能显示的记录条数  PageHelper 通过设置当前页码，和每页分隔几条，会自动在语句后面拼上limit
+
+        size:当前页面显示的实际记录条数
+        startRow：起始行
+        endRow：终止行
+        total：总行数
+        page：总页数
+        list：当前页的数据集合
+        prePage:上一页
+        nextPage：下一页
+        isFirstPage:是否是第一页
+        isLastPage:是否是最后一页
+        hasPreviousPage:是否有上一页
+        hasNextPage：是否有下一页
+        navigatePages：总导航页数
+        navigatePageNums：所有导航页码
+        navigateFirstPage:导航的第一页
+        navigateLastPage:导航的最后一页
+    -->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+</configuration>

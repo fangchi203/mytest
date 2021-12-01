@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+        <!--spring接管了mybatis 一堆配置文件都要写在这里-->
+    <!--读取jdbc.properties属性文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--创建数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/><!--如果是${username} 不加jdbc 读取的是计算机登录的用户的名称-->
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--创建SqlSessionFactoryBean-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--配置数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置MyBatis的核心配置文件-->
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"/>
+        <!--配置实体类-->
+        <property name="typeAliasesPackage" value="com.lyc.pojo"/>
+    </bean>
+    <!--创建Mapper文件的扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.lyc.mapper"/>
+    </bean>
+</beans>
